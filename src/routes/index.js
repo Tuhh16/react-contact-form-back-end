@@ -5,6 +5,10 @@ const { smtp, auth, mailto } = require('../../config/email');
 const { validate } = require('../middleware/contactValidate')
 
 
+router.get('/teste', (req, res) => {
+    res.json({ message: 'OIIIII' })
+});
+
 router.post('/email', async (req, res) => {
 
     try {
