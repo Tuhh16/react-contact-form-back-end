@@ -9,7 +9,7 @@ router.post('/email', async (req, res) => {
     try {
         const errors = await validate(req.body);
         if(Array.isArray(errors)){
-            return res.status(400).json({ message: errors });
+           res.status(400).json({ message: errors });
         }
 
         const templateHtml = `
@@ -41,16 +41,11 @@ router.post('/email', async (req, res) => {
             html: templateHtml
         };
     
-        transporter.sendMail(mailOptions, (err, data) => {
-            if (err) {
-                return res.status(500).json({ message: ['Erro ao enviar o email '] });
-            }
-            return res.status(200).json({ message: ['Mensagem enviada !'] });
-        });
-
+        await transporter.sendMail(mailOptions);
+        res.status(200).json({ message: ['Mensagem enviada !'] });
         
     } catch (error) {
-        return res.status(500).json({ message: ['Erro ao enviar a mensagem '] })
+        res.status(500).json({ message: ['Erro ao enviar a mensagem '] })
     }
 
 
